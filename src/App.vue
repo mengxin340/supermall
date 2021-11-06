@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-    <div id="nav"></div>
-    <router-view />
+    <router-view></router-view>
+    <tabbar></tabbar>
   </div>
 </template>
-
+<script>
+import tabbar from "components/content/tabbar-content";
+export default {
+  components: { tabbar },
+};
+</script>
 <style>
 @import "./assets/css/base.css";
 </style>
