@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import tabbar from "components/content/tabbar-content";
+import tabbar from "components/content/mainTabbar/tabbar-content";
 export default {
   components: { tabbar },
 };
