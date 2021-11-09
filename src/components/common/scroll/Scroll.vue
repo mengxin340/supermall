@@ -14,15 +14,34 @@ export default {
       scroll: null,
     };
   },
+  props: {
+    probeType: {
+      type: Number,
+      default: 0,
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false,
+    },
+  },
   mounted() {
     this.scroll = new BScroll(this.$refs.wrapper, {
-      probeType: 2,
+      probeType: this.probeType,
       observeDOM: true,
       click: true,
+      pullUpLoad: this.pullUpLoad,
     });
-    // scroll.on("pullingUp", () => {
-    //   console.log("上拉加载更多");
-    // });
+    this.scroll.on("scroll", (position) => {
+      this.$emit("scrollContent", position);
+    });
+    this.scroll.on("pullingUp", () => {
+      this.$emit("pullingUp");
+    });
+  },
+  methods: {
+    scrollTo(x, y, time = 500) {
+      this.scroll.scrollTo(x, y, 500);
+    },
   },
 };
 </script>

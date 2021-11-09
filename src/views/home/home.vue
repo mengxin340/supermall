@@ -3,7 +3,14 @@
     <navbar class="home-nav">
       <template #center> 购物街 </template>
     </navbar>
-    <Scroll class="content">
+    <scroll
+      class="content"
+      ref="scroll"
+      :probeType="3"
+      @scrollContent="scroll"
+      :pullUpLoad="true"
+      @pullingUp="loadMore"
+    >
       <swiper :banners="banners"></swiper>
       <recommend :recommend="recommend"></recommend>
       <featureView></featureView>
@@ -13,7 +20,8 @@
         @tabClick="tabClick"
       ></tabControl>
       <goods-list :goodsList="goodsType"></goods-list>
-    </Scroll>
+    </scroll>
+    <back-top @click.native="backClick" v-show="isShow"></back-top>
   </div>
 </template>
 
@@ -26,6 +34,7 @@ import navbar from "components/common/navbar/NavBar";
 import Scroll from "components/common/scroll/Scroll";
 import tabControl from "../../components/content/tabControl/TabControl.vue";
 import GoodsList from "components/content/goodsList/GoodsList.vue";
+import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultdata, getHomeGoods } from "network/home.js";
 
@@ -49,6 +58,7 @@ export default {
         },
       },
       currentType: "pop",
+      isShow: false,
     };
   },
   computed: {
@@ -77,6 +87,15 @@ export default {
           break;
       }
     },
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0, 500);
+    },
+    scroll(position) {
+      this.isShow = -position.y > 1000 ? true : false;
+    },
+    loadMore() {
+      this.getHomeGoods(this.currentType);
+    },
 
     //请求对应方法
     getHomeMultdata() {
@@ -90,6 +109,8 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page += 1;
+        this.$refs.scroll.scroll.refresh();
+        this.$refs.scroll.scroll.finishPullUp();
       });
     },
   },
@@ -101,19 +122,23 @@ export default {
     tabControl,
     GoodsList,
     Scroll,
+    BackTop,
   },
 };
 </script>
 
 <style scoped>
+#home {
+  height: 100vh;
+}
 .tab-control {
   position: sticky;
   top: 44px;
-  z-index: 1;
 }
 .content {
-  padding-top: 44px;
-  height: calc(100vh - 49px);
+  position: absolute;
+  top: 44px;
+  height: calc(100% - 93px);
 }
 .home-nav {
   background-color: var(--color-tint);
