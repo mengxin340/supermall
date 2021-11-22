@@ -9,7 +9,7 @@
 <script>
 export default {};
 </script>
-<style>
+<style scoped>
 .nav-bar {
   position: fixed;
   left: 0;

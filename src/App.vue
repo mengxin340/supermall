@@ -1,13 +1,23 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive exclude="Detail">
+      <router-view></router-view>
+    </keep-alive>
     <tabbar></tabbar>
+    <icon></icon>
+    <svg-icon></svg-icon>
   </div>
 </template>
 <script>
+import Icon from "components/content/Icon/Icon.vue";
+import SvgIcon from "components/content/Icon/svg.vue";
 import tabbar from "components/content/mainTabbar/tabbar-content";
 export default {
-  components: { tabbar },
+  components: {
+    tabbar,
+    Icon,
+    SvgIcon,
+  },
 };
 </script>
 <style>

@@ -1,6 +1,9 @@
 <template>
-  <div class="goods">
-    <img :src="goodsItem.show.img" alt="" />
+  <div class="goods" @click="itemClick">
+    <img
+      v-lazy="goodsItem.image || goodsItem.img || goodsItem.show.img"
+      alt=""
+    />
     <div class="goods-info">
       <p>{{ goodsItem.title }}</p>
       <span class="price">{{ goodsItem.price }}</span>
@@ -15,14 +18,20 @@ export default {
     goodsItem: {
       type: Object,
       default() {
-        return [];
+        return {};
       },
+    },
+  },
+  methods: {
+    itemClick() {
+      const iid = this.goodsItem.iid;
+      this.$router.push("/detail" + iid);
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .goods {
   width: 48%;
   padding-bottom: 40px;

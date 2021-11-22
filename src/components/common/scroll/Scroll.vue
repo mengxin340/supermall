@@ -28,19 +28,22 @@ export default {
     this.scroll = new BScroll(this.$refs.wrapper, {
       probeType: this.probeType,
       observeDOM: true,
+      observeImage: true,
       click: true,
       pullUpLoad: this.pullUpLoad,
     });
     this.scroll.on("scroll", (position) => {
       this.$emit("scrollContent", position);
     });
-    this.scroll.on("pullingUp", () => {
-      this.$emit("pullingUp");
-    });
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        this.$emit("pullingUp");
+      });
+    }
   },
   methods: {
     scrollTo(x, y, time = 500) {
-      this.scroll.scrollTo(x, y, 500);
+      this.scroll.scrollTo(x, y, time);
     },
   },
 };

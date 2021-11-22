@@ -15,10 +15,12 @@ module.exports = {
       .set('assets', resolve('./src/assets'))
       .set('views', resolve('./src/views'))
       .set('network', resolve('./src/network'))
+      .set('common', resolve('./src/common'))
     //注意 store 和 router 没必要配置
 
   },
   devServer: {
     host: "0.0.0.0",
   }
+
 }
