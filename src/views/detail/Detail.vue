@@ -1,5 +1,5 @@
 <template>
-  <div id="detail" :class="'detail' + iid">
+  <div id="detail" class="detail">
     <detail-nav-bar
       @cancelScroll="cancelScroll"
       @titleClick="titleClick"
